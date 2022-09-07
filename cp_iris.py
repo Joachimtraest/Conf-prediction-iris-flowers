@@ -44,6 +44,23 @@ class CP_Iris:
         return alpha
     
     @staticmethod
+    def Dist_to_avg(flower, other_flowers):
+        #distance to the average of each species nonconformity measure (p. 392 in Shafer and Vovk)
+        all_flowers = other_flowers[:]
+        all_flowers.append(flower)
+        species_list = []
+        for i in all_flowers:
+            species_list.append(i.species)
+        
+        sepal_lengths = []
+
+        for j in all_flowers:
+            if j.species == flower.species:
+                sepal_lengths.append(j.sepal_length)
+        avg = sum(sepal_lengths)/len(sepal_lengths)
+        return abs(avg - flower.sepal_length)
+
+    @staticmethod
     def classify_Iris(A, flower, other_flowers, possible_species):
         #gives the corresponding epsilon for each prediction region 
         p_list = []
@@ -63,4 +80,3 @@ class CP_Iris:
             print('if epsilon is > ' +  str(sorted_list[j-1][1]) + ' and < ' + str(sorted_list[j][1]) + ' the prediction region includes ' + elements  )
         print('if epsilon is > ' + str(sorted_list[-1][1]) + ' the prediction region is empty')
         return
-    
